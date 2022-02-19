@@ -29,17 +29,17 @@ class MenuState extends FlxState
 
 	function clickLevel1():Void
 	{
-		FlxG.switchState(new FirstLevelState(500, -200));
+		FlxG.switchState(new FirstLevelState(500, -200, "Level1"));
 	}
 
 	function clickLevel2():Void
 	{
-		FlxG.switchState(new FirstLevelState(200, -200));
+		FlxG.switchState(new FirstLevelState(200, -200, "Level2"));
 	}
 
 	function clickLevel3():Void
 	{
-		FlxG.switchState(new FirstLevelState(300, -100));
+		FlxG.switchState(new FirstLevelState(300, -100, "Level3"));
 	}
 
 	override public function update(elapsed:Float)

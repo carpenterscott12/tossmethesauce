@@ -4,7 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.util.FlxFSM;
 
-class Slime extends FlxSprite
+class PlayerCharacter extends FlxSprite
 {
 	public static inline var GRAVITY:Float = 600;
 
@@ -14,7 +14,7 @@ class Slime extends FlxSprite
 	{
 		super(X, Y);
 
-		loadGraphic("assets/slime.png", true, 16, 16);
+		loadGraphic("assets/playerCharacter.png", true, 16, 16);
 		setFacingFlip(LEFT, true, false);
 		setFacingFlip(RIGHT, false, false);
 		facing = RIGHT;
@@ -26,10 +26,11 @@ class Slime extends FlxSprite
 		animation.add("landing", [4, 0, 1, 0], 8, false);
 
 		acceleration.y = GRAVITY;
-		maxVelocity.set(100, GRAVITY);
+		maxVelocity.set(500, GRAVITY);
 
 		fsm = new FlxFSM<FlxSprite>(this);
 		fsm.transitions.add(Idle, Jump, Conditions.jump)
+			.add(Jump, Jump, Conditions.jump) // For wall jump (or double jump if that is allowed in jump logic)
 			.add(Jump, Idle, Conditions.grounded)
 			.add(Jump, GroundPound, Conditions.groundSlam)
 			.add(GroundPound, GroundPoundFinish, Conditions.grounded)
@@ -56,7 +57,7 @@ class Conditions
 	public static function jump(Owner:FlxSprite):Bool
 	{
 		// Owner.isTouching(DOWN) means the Owner is touching a surface that is below the Owner
-		return (FlxG.keys.justPressed.UP && Owner.isTouching(DOWN));
+		return (FlxG.keys.justPressed.UP && (Owner.isTouching(DOWN) || Owner.isTouching(LEFT) || Owner.isTouching(RIGHT)));
 	}
 
 	public static function grounded(Owner:FlxSprite):Bool
@@ -89,7 +90,7 @@ class Idle extends FlxFSMState<FlxSprite>
 		{
 			owner.facing = FlxG.keys.pressed.LEFT ? LEFT : RIGHT;
 			owner.animation.play("walking");
-			owner.acceleration.x = FlxG.keys.pressed.LEFT ? -300 : 300;
+			owner.acceleration.x = FlxG.keys.pressed.LEFT ? -200 : 200;
 		}
 		else
 		{
@@ -111,6 +112,7 @@ class Jump extends FlxFSMState<FlxSprite>
 	override public function update(elapsed:Float, owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
 	{
 		owner.acceleration.x = 0;
+		// This part allows the character to move left and right while in the air
 		if (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.RIGHT)
 		{
 			owner.acceleration.x = FlxG.keys.pressed.LEFT ? -300 : 300;
@@ -118,14 +120,14 @@ class Jump extends FlxFSMState<FlxSprite>
 	}
 }
 
-class SuperJump extends Jump
-{
-	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
-	{
-		owner.animation.play("jumping");
-		owner.velocity.y = -300;
-	}
-}
+// class SuperJump extends Jump
+// {
+// 	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+// 	{
+// 		owner.animation.play("jumping");
+// 		owner.velocity.y = -300;
+// 	}
+// }
 
 class GroundPound extends FlxFSMState<FlxSprite>
 {
@@ -148,7 +150,7 @@ class GroundPound extends FlxFSMState<FlxSprite>
 		}
 		else
 		{
-			owner.velocity.y = Slime.GRAVITY;
+			owner.velocity.y = PlayerCharacter.GRAVITY;
 		}
 	}
 }
