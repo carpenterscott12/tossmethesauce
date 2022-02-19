@@ -105,7 +105,7 @@ class Jump extends FlxFSMState<FlxSprite>
 	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
 	{
 		owner.animation.play("jumping");
-		owner.velocity.y = -200;
+		owner.velocity.y = -300;
 	}
 
 	override public function update(elapsed:Float, owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void

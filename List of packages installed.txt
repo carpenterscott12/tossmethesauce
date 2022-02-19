@@ -49,3 +49,6 @@ An example of how to use FlxFSM - says it's a little simpler than the demo from 
 https://gist.github.com/RichardBray/7347fa48ba80ba3a8b75ec0a0abc8dab
 
 For optimization, try bundling a lot of objects together using an FlxGroup (or even bundling groups together)
+
+
+For 16x9 aspect ratio, I need to make the width and height something like 960x540 (Exactly half of 1920x1080)
