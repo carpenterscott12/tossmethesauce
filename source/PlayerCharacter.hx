@@ -3,16 +3,21 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.util.FlxFSM;
+import flixel.system.FlxSound;
 
 class PlayerCharacter extends FlxSprite
 {
 	public static inline var GRAVITY:Float = 600;
 
-	public var fsm:FlxFSM<FlxSprite>;
+	public var fsm:FlxFSM<PlayerCharacter>;
+
+	public var jumpSound:FlxSound;
 
 	public function new(X:Float = 0, Y:Float = 0)
 	{
 		super(X, Y);
+
+		jumpSound = FlxG.sound.load("assets/sounds/Jump.wav");
 
 		loadGraphic("assets/playerCharacter.png", true, 16, 16);
 		setFacingFlip(LEFT, true, false);
@@ -28,7 +33,7 @@ class PlayerCharacter extends FlxSprite
 		acceleration.y = GRAVITY;
 		maxVelocity.set(500, GRAVITY);
 
-		fsm = new FlxFSM<FlxSprite>(this);
+		fsm = new FlxFSM<PlayerCharacter>(this);
 		fsm.transitions.add(Idle, Jump, Conditions.jump)
 			.add(Jump, Jump, Conditions.jump) // For wall jump (or double jump if that is allowed in jump logic)
 			.add(Jump, Idle, Conditions.grounded)
@@ -54,36 +59,36 @@ class PlayerCharacter extends FlxSprite
 
 class Conditions
 {
-	public static function jump(Owner:FlxSprite):Bool
+	public static function jump(Owner:PlayerCharacter):Bool
 	{
 		// Owner.isTouching(DOWN) means the Owner is touching a surface that is below the Owner
 		return (FlxG.keys.justPressed.UP && (Owner.isTouching(DOWN) || Owner.isTouching(LEFT) || Owner.isTouching(RIGHT)));
 	}
 
-	public static function grounded(Owner:FlxSprite):Bool
+	public static function grounded(Owner:PlayerCharacter):Bool
 	{
 		return Owner.isTouching(DOWN);
 	}
 
-	public static function groundSlam(Owner:FlxSprite):Bool
+	public static function groundSlam(Owner:PlayerCharacter):Bool
 	{
 		return FlxG.keys.justPressed.DOWN && !Owner.isTouching(DOWN);
 	}
 
-	public static function animationFinished(Owner:FlxSprite):Bool
+	public static function animationFinished(Owner:PlayerCharacter):Bool
 	{
 		return Owner.animation.finished;
 	}
 }
 
-class Idle extends FlxFSMState<FlxSprite>
+class Idle extends FlxFSMState<PlayerCharacter>
 {
-	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function enter(owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
 		owner.animation.play("standing");
 	}
 
-	override public function update(elapsed:Float, owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function update(elapsed:Float, owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
 		owner.acceleration.x = 0;
 		if (FlxG.keys.pressed.LEFT || FlxG.keys.pressed.RIGHT)
@@ -101,15 +106,16 @@ class Idle extends FlxFSMState<FlxSprite>
 	}
 }
 
-class Jump extends FlxFSMState<FlxSprite>
+class Jump extends FlxFSMState<PlayerCharacter>
 {
-	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function enter(owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
+		owner.jumpSound.play();
 		owner.animation.play("jumping");
 		owner.velocity.y = -300;
 	}
 
-	override public function update(elapsed:Float, owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function update(elapsed:Float, owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
 		owner.acceleration.x = 0;
 		// This part allows the character to move left and right while in the air
@@ -129,11 +135,11 @@ class Jump extends FlxFSMState<FlxSprite>
 // 	}
 // }
 
-class GroundPound extends FlxFSMState<FlxSprite>
+class GroundPound extends FlxFSMState<PlayerCharacter>
 {
 	var _ticks:Float;
 
-	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function enter(owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
 		owner.animation.play("pound");
 		owner.velocity.x = 0;
@@ -141,7 +147,7 @@ class GroundPound extends FlxFSMState<FlxSprite>
 		_ticks = 0;
 	}
 
-	override public function update(elapsed:Float, owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function update(elapsed:Float, owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
 		_ticks++;
 		if (_ticks < 15)
@@ -155,9 +161,9 @@ class GroundPound extends FlxFSMState<FlxSprite>
 	}
 }
 
-class GroundPoundFinish extends FlxFSMState<FlxSprite>
+class GroundPoundFinish extends FlxFSMState<PlayerCharacter>
 {
-	override public function enter(owner:FlxSprite, fsm:FlxFSM<FlxSprite>):Void
+	override public function enter(owner:PlayerCharacter, fsm:FlxFSM<PlayerCharacter>):Void
 	{
 		owner.animation.play("landing");
 		FlxG.camera.shake(0.025, 0.25);
