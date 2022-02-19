@@ -18,6 +18,7 @@ class FirstLevelState extends FlxState
 	var _throwVelocity_X:Float;
 	var _throwVelocity_Y:Float;
 	var _levelName:String;
+	var _levelWon:Bool;
 
 	var _info:String = "LEFT & RIGHT to move, UP to jump. T to throw ball. R to reset level state. Catch the ball to win!";
 	var _txtInfo:FlxText;
@@ -28,6 +29,7 @@ class FirstLevelState extends FlxState
 		_throwVelocity_X = throwVelocity_X;
 		_throwVelocity_Y = throwVelocity_Y;
 		_levelName = levelName;
+		_levelWon = false;
 	}
 
 	override public function create()
@@ -74,6 +76,11 @@ class FirstLevelState extends FlxState
 		{
 			FlxG.camera.flash(FlxColor.BLACK, .1, resetLevelStateWithParameters);
 		}
+
+		if (_levelWon == true && FlxG.keys.justPressed.SPACE)
+		{
+			returnToMenu();
+		}
 	}
 
 	function resetLevelStateWithParameters()
@@ -97,7 +104,9 @@ class FirstLevelState extends FlxState
 		var _btnReturnToMenu:FlxButton;
 
 		ball.kill();
-		_btnReturnToMenu = new FlxButton(0, 0, "Return to menu", returnToMenu);
+		_levelWon = true;
+		_btnReturnToMenu = new FlxButton(0, 0, "Press SPACE to Continue", returnToMenu);
+		_btnReturnToMenu.label.fieldWidth = 100;
 		_btnReturnToMenu.screenCenter();
 		add(_btnReturnToMenu);
 		return;
