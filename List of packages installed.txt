@@ -62,3 +62,6 @@ https://api.haxeflixel.com/flixel/math/FlxVelocity.html
 
 Game over menu, which has examples of button orientation on the screen so that they are not overlapping:
 https://haxeflixel.com/documentation/game-over-menu/
+
+I will probably use this for music creation:
+https://musiclab.chromeexperiments.com/Song-Maker

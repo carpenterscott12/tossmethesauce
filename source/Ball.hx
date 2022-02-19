@@ -31,7 +31,7 @@ class Ball extends FlxSprite
 		animation.add("landing", [4, 0, 1, 0], 8, false);
 
 		acceleration.y = 0;
-		maxVelocity.set(500, GRAVITY);
+		maxVelocity.set(1000, GRAVITY);
 
 		fsm = new FlxFSM<Ball>(this);
 		fsm.transitions.add(StartingBall, Throw, BallConditions.launch)

@@ -12,6 +12,11 @@ class MenuState extends FlxState
 
 	override public function create():Void
 	{
+		if (FlxG.sound.music == null) // prevents restarting the music if it's already playing
+		{
+			FlxG.sound.playMusic("assets/music/Peaceful Woods.wav", 1, true);
+		}
+
 		_btnLevel1 = new FlxButton(0, 0, "Level 1", clickLevel1);
 		_btnLevel1.x = 100;
 		_btnLevel1.y = 100;
@@ -34,12 +39,12 @@ class MenuState extends FlxState
 
 	function clickLevel2():Void
 	{
-		FlxG.switchState(new FirstLevelState(200, -200, "Level2"));
+		FlxG.switchState(new FirstLevelState(700, -200, "Level2"));
 	}
 
 	function clickLevel3():Void
 	{
-		FlxG.switchState(new FirstLevelState(300, -100, "Level3"));
+		FlxG.switchState(new FirstLevelState(800, -100, "Level3"));
 	}
 
 	override public function update(elapsed:Float)
