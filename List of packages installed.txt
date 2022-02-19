@@ -1,0 +1,51 @@
+Haxe
+
+lime
+haxelib run lime setup
+
+openfl
+haxelib run openfl setup
+
+flixel (HaxeFlixel)
+
+flixel-tools https://haxeflixel.com/documentation/flixel-tools/
+haxelib run flixel-tools setup
+
+To set the tools up initially / to be able to use the flixel alias in your console:
+haxelib run flixel-tools setup
+https://haxeflixel.com/documentation/flixel-tools/
+
+haxelib install flixel-addons
+https://haxeflixel.com/documentation/flixel-addons/
+
+
+To test:
+lime test html5
+* Use whatever platform you want in the third value there in the command line
+
+
+Used this to set up the main menu:
+https://medium.com/@priyanshsangule/game-menu-in-1min-haxeflixel-fa6a8ac8909e
+
+I want to use this to set up player movement:
+https://medium.com/@priyanshsangule/game-menu-and-player-movement-in-2-min-haxeflixel-1c4277859b06
+
+I could use this to learn about sprites and music at least:
+https://haxe.org/videos/tutorials/haxeflixel-tutorial-series/
+
+EZPlatformer is a game project that I could probably learn from, but it was created 11 years ago, meaning there must be some better methods of programming since then:
+https://github.com/AdamAtomic/EZPlatformer/blob/master/src/PlayState.as
+
+This game has better movement and jumping physics, so I might use it as a better example. It also has a sprite as the main character rather than a simple block:
+https://github.com/HaxeFlixel/flixel-demos/tree/dev/Features/FlxFSM/source
+
+This game is probably the most complex platformer so far, even having some features I probably don't need:
+https://github.com/HaxeFlixel/flixel-demos/tree/dev/Platformers/ProjectJumper/source
+
+This page has a lot of demos that I can use to learn about various features, but the main ones I see are tooltips and transitions:
+https://haxeflixel.com/demos/
+
+An example of how to use FlxFSM - says it's a little simpler than the demo from the haxeFlixel site:
+https://gist.github.com/RichardBray/7347fa48ba80ba3a8b75ec0a0abc8dab
+
+For optimization, try bundling a lot of objects together using an FlxGroup (or even bundling groups together)
