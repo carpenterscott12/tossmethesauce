@@ -1,0 +1,23 @@
+Haxe
+
+lime
+haxelib run lime setup
+
+openfl
+haxelib run openfl setup
+
+flixel (HaxeFlixel)
+
+flixel-tools https://haxeflixel.com/documentation/flixel-tools/
+haxelib run flixel-tools setup
+
+
+To set the tools up initially / to be able to use the flixel alias in your console:
+haxelib run flixel-tools setup
+https://haxeflixel.com/documentation/flixel-tools/
+
+Used this to set up the main menu:
+https://medium.com/@priyanshsangule/game-menu-in-1min-haxeflixel-fa6a8ac8909e
+
+I want to use this to set up player movement:
+https://medium.com/@priyanshsangule/game-menu-and-player-movement-in-2-min-haxeflixel-1c4277859b06
