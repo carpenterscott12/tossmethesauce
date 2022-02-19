@@ -15,9 +15,18 @@ class FirstLevelState extends FlxState
 	var _slime:Slime;
 	var _powerup:FlxSprite;
 	var _ball:Ball;
+	var _throwVelocity_X:Float;
+	var _throwVelocity_Y:Float;
 
 	var _info:String = "LEFT & RIGHT to move, UP to jump. Current State: {STATE}";
 	var _txtInfo:FlxText;
+
+	public function new(throwVelocity_X:Float, throwVelocity_Y:Float)
+	{
+		super();
+		_throwVelocity_X = throwVelocity_X;
+		_throwVelocity_Y = throwVelocity_Y;
+	}
 
 	override public function create()
 	{
@@ -34,7 +43,7 @@ class FirstLevelState extends FlxState
 		_slime = new Slime(192, 128);
 		add(_slime);
 
-		_ball = new Ball(20, 100, 500, -200);
+		_ball = new Ball(20, 100, _throwVelocity_X, _throwVelocity_Y);
 		add(_ball);
 
 		_powerup = new FlxSprite(48, 208, "assets/powerup.png");

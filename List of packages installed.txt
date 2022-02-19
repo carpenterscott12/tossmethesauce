@@ -59,3 +59,6 @@ https://api.haxeflixel.com/flixel/FlxSprite.html
 
 There are some cool functions in here for accelerating an object toward the mouse cursor:
 https://api.haxeflixel.com/flixel/math/FlxVelocity.html
+
+Game over menu, which has examples of button orientation on the screen so that they are not overlapping:
+https://haxeflixel.com/documentation/game-over-menu/
