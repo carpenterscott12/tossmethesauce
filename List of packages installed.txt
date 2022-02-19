@@ -52,3 +52,10 @@ For optimization, try bundling a lot of objects together using an FlxGroup (or e
 
 
 For 16x9 aspect ratio, I need to make the width and height something like 960x540 (Exactly half of 1920x1080)
+
+
+I could use the antialiasing boolean here to possibly improve the look of sprites. I would need to keep that configuration setting toggleable somewhere else though.
+https://api.haxeflixel.com/flixel/FlxSprite.html
+
+There are some cool functions in here for accelerating an object toward the mouse cursor:
+https://api.haxeflixel.com/flixel/math/FlxVelocity.html

@@ -34,7 +34,7 @@ class FirstLevelState extends FlxState
 		_slime = new Slime(192, 128);
 		add(_slime);
 
-		_ball = new Ball(100, 100);
+		_ball = new Ball(20, 100, 500, -200);
 		add(_ball);
 
 		_powerup = new FlxSprite(48, 208, "assets/powerup.png");
