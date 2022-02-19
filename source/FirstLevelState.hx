@@ -18,8 +18,6 @@ class FirstLevelState extends FlxState
     var _info:String = "LEFT & RIGHT to move, UP to jump. Current State: {STATE}";
     var _txtInfo:FlxText;
     
-    var _player:Player;
-    
 	override public function create()
 	{
         bgColor = 0xff661166;
