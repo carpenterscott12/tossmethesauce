@@ -31,24 +31,20 @@ import flixel.math.FlxPoint;
     {
         // Declaring variables
         var _up:Bool = false;
-        var _down:Bool = false;
         var _left:Bool = false;
         var _right:Bool = false;
 
         // When desired key is pressed
         _up = FlxG.keys.anyPressed([UP, W]);
-        _down = FlxG.keys.anyPressed([DOWN, S]);
         _left = FlxG.keys.anyPressed([LEFT, A]);
         _right = FlxG.keys.anyPressed([RIGHT, D]);
 
         //Cancel out opposite directions
-        if (_up && _down)
-            _up = _down = false;
         if (_left && _right)
             _left = _right = false;
 
         // If actually moving, set angle
-        if (_up || _down || _left || _right){
+        if (_up || _left || _right){
             
             // Initialize angle
             var mA:Float = 0;            
@@ -59,14 +55,6 @@ import flixel.math.FlxPoint;
                     mA -= 45;
                 else if (_right)
                     mA += 45;
-            }
-            else if (_down)
-            {
-                mA = 90;
-                if (_left)
-                    mA += 45;
-                else if (_right)
-                    mA -= 45;
             }
             else if (_left)
                 mA = 180;
