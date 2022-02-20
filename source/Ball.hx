@@ -3,6 +3,9 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.util.FlxFSM;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxEase.EaseFunction;
+import flixel.tweens.FlxTween;
 
 class Ball extends FlxSprite
 {
@@ -32,7 +35,6 @@ class Ball extends FlxSprite
 
 		acceleration.y = 0;
 		maxVelocity.set(500, GRAVITY);
-
 		fsm = new FlxFSM<Ball>(this);
 		fsm.transitions.add(StartingBall, Throw, BallConditions.launch)
 			.add(Throw, GroundedBall, BallConditions.grounded) // .add(GroundedBall, ReflectLeft, BallConditions.collideRight)
@@ -42,7 +44,7 @@ class Ball extends FlxSprite
 
 	override public function update(elapsed:Float):Void
 	{
-		fsm.update(elapsed);
+		fsm.update(elapsed);		
 		super.update(elapsed);
 	}
 
@@ -97,6 +99,7 @@ class Throw extends FlxFSMState<Ball>
 	override public function update(elapsed:Float, owner:Ball, fsm:FlxFSM<Ball>):Void
 	{
 		owner.animation.play("jumping");
+		FlxTween.tween(owner, {x: owner.velocity.x, y: owner.velocity.y, angle: 180}, 1, {type: ONESHOT, ease: FlxEase.quintOut});
 	}
 }
 
@@ -124,6 +127,7 @@ class GroundedBall extends FlxFSMState<Ball>
 	{
 		owner.animation.play("standing");
 		owner.velocity.x *= 0.99;
+		FlxTween.tween(owner, {x: owner.velocity.x, y:owner.velocity.y, angle: 180}, 1, {type: ONESHOT, ease: FlxEase.quintOut});
 	}
 }
 
